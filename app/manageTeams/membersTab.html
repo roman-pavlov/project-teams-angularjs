@@ -1,0 +1,59 @@
+<div id="membersTabView"
+     class="container-fluid">
+    <!--{{ctrl.content}}-->
+
+    <div class="row row-margin">
+        <div class="input-group">
+            <form ng-submit="ctrl.getMembers()" name="filterForm">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Filter" ng-model="ctrl.filter"
+                           name="teamName"/>
+
+                    <span class="input-group-btn">
+                                                <button class="btn btn-success">
+                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                </button>
+
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row row-margin">
+
+        <table class="table table-striped" id="membersGrid">
+            <tr>
+                <th><a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '+name';">Name</a>
+                    (<a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '-name';">^</a>)
+                </th>
+                <th><a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '+job';">Job title</a>
+                    (<a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '-job';">^</a>)
+                </th>
+                <th><a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '+age';">Age</a>
+                    (<a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '-age';">^</a>)
+                </th>
+                <th><a href="javascript:void(0)" ng-click="ctrl.sortPredicate = '+grade';">Grade</a></th>
+
+            </tr>
+            <tr ng-repeat-start="m in ctrl.members | orderBy:ctrl.sortPredicate | filter: ctrl.isOnActivePage" ng-click="m.showFeedback = !m.showFeedback" ng-class="{selected : ctrl.isSelected(m)}">
+                <td><div tooltip="{{ctrl.getMemberDetails(m)}}"> <a href="javascript:void(0)" ng-click="ctrl.addMember($event,m)" >{{m.name}}</a></div></td>
+                <td>{{m.job}}</td>
+                <td>{{m.age}}</td>
+                <td>{{m.grade}}</td>
+            </tr>
+            <tr ng-repeat-end ng-show="m.showFeedback">
+                <td colspan="4"><textarea ng-model="m.feedback"></textarea></td>
+            </tr>
+        </table>
+        <div id="paging" >
+            <!--<nav>-->
+                <!--<ul class="pagination">-->
+                    <!--<li ng-repeat="p in ctrl.pages" ng-class="{active : ctrl.pageNumber === p}" ><a href="javascript:void(0)" ng-click="ctrl.navigatePage(p)">{{p}}</a></li>-->
+                <!--</ul>-->
+            <!--</nav>-->
+            <a ng-repeat="p in ctrl.pages" href="javascript:void(0)" ng-click="ctrl.navigatePage(p)" ng-class="{selected : ctrl.pageNumber === p}">{{p}}</a>
+        </div>
+    </div>
+</div>

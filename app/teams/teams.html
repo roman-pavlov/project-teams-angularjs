@@ -1,0 +1,55 @@
+<div id="teamsView" ng-controller="projTeams.teams.TeamsCtrl as ctrl">
+    <div class="row row-margin">
+        <div class="col-md-12 padding">
+            <form ng-submit="ctrl.addTeam()" name="addTeamForm">
+                <div class="input-group">
+
+                    <input type="text" class="form-control" placeholder="Add New Team" ng-model="ctrl.team.name"
+                           required ng-minlength="1" ng-pattern="/^[a-zA-Z0-9]+$/" name="teamName"/>
+
+                    <span class="input-group-btn">
+                        <!--<input type="submit" value="+" class="btn btn-success" ng-disabled="addTeamForm.$invalid"/>-->
+                                                <button class="btn btn-success"
+                                                        ng-disabled="addTeamForm.$invalid">
+                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                </button>
+
+                    </span>
+                </div>
+                <div ng-show="addTeamForm.teamName.$error.pattern" class="error">
+                    Only letters and digits are allowed.
+                </div>
+                <div ng-show="ctrl.validationState.teamAlreadyExist" class="error">
+                    Team with the specified name already exists.
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row row-margin">
+        <div class="col-md-12 padding">
+            <div ng-repeat="team in ctrl.teams">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle" href="javascript:void(0)"
+                               ng-click="ctrl.teamClick(team)">{{team.name}}</a>
+                        </h4>
+                    </div>
+                    <!--<hr>-->
+                    <div collapse="team.isCollapsed" class="panel-body">
+                        <!--<div class="well well-lg">Some content</div>-->
+                        <div ng-repeat="member in team.members" class="row">
+                            <div class="col-md-10"><span tooltip="{{ctrl.getMemberDetails(member)}}"
+                                                         ng-bind="member.name"></span></div>
+                            <div class="col-md-2">
+                                <button type="button" class="close" aria-label="Delete"
+                                        ng-click="ctrl.deleteMember(team, member)"><span
+                                        aria-hidden="true">&times;</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

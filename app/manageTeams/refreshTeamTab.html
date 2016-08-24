@@ -1,0 +1,21 @@
+<div id="refreshTeamTabView"
+     class="container-fluid">
+
+
+    <div class="row row-margin">
+        <pre>Team: {{ctrl.teamName}} </pre>
+    </div>
+
+    <!--<pre>Model: {{ctrl.selectedMembers | json}}</pre>-->
+
+
+    <div class="row row-margin">
+        <input id="teamMembersInput" type="text" typeahead-tag-manager loading="ctrl.loadingMembers"
+               ng-model="ctrl.selectedMembers"/>
+        <span class="btn"><input type="button" value="Refresh" class="btn btn-success"
+                                 ng-disabled="!ctrl.selectedMembers" ng-click="ctrl.refreshClick()"/></span>
+    </div>
+    <i ng-show="ctrl.loadingMembers" class="glyphicon glyphicon-refresh"></i>
+
+
+</div>
